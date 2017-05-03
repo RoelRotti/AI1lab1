@@ -36,11 +36,20 @@ List newEmptyList() {
 	return NULL;
 }
 
-List addItem(int n, List li) {
-	List newList = malloc(sizeof(struct ListNode));
-	assert(newList!=NULL);
-	newList->item = n;
-	newList->next = li;
-	return newList;
+List insertInOrder(list li, int n) {
+	if ( li==NULL || n < li->item ) {
+		return addItem(li,n);
+	} 
+	/* now li->item <= n */
+	if ( li->item < n ) {
+		li->next = insertInOrder(li->next,n);
+	}
+	return li;
+}
+
+State dequeue (List *li){
+	State item = li->item;
+	li = li->next;
+	return item;
 }
 

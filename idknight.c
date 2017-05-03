@@ -55,8 +55,38 @@ int knightIDS(int row, int column, int rowGoal, int columnGoal) {
   return limit;
 }
 
+
+
 int aStarAlgo (int row, int column, int rowGoal, int columnGoal){
-	
+	int x;
+	int **arr = create2Darray;
+	coords goal = createCoords(columnGoal, rowGoal);
+	State current = createNewState(column, row, goal);
+	x = checkIfNear(column, row, columnGoal, rowGoal)
+	if (x > (-1)){
+		return x;
+	}
+	List li = newEmptyList;
+	li = insertInOrder(li, current);
+	while (li != NULL){
+		current = dequeue (*li);
+		/* mark visited */
+		for (act=0; act < 8; act++) {
+			int r = row + actions[act][0];
+			int c = column + actions[act][1]; /* check if visited implementation */
+			if (isValidLocation(r, c)) {
+			  if (!hasBeenVisited(r, c)){
+				  newCoords = createCoords (r, c);
+				  new = createNewState(current, newCoords, goal); /* needs Diagonal */
+				  x = checkIfNear(c, r, columnGoal, rowGoal); /* we found the solution within a range of x moves */
+				  if (x > (-1)){
+					  return new.length+x; 
+				  }
+				  li = insertInOrder(li, new);
+			}
+		}
+	}
+	return 0;
 		
 }
 
@@ -71,7 +101,7 @@ int main(int argc, char *argv[]) {
     scanf("%d %d", &x1, &y1);
   } while (!isValidLocation(x1,y1));
 
-  printf("Length shortest path: %d\n", knightIDS(x0,y0, x1,y1));
+  printf("Length shortest path: %d\n", aStarAlgo(x0,y0, x1,y1)); /*knightIDS*/
   printf("#visited states: %lu\n", statesVisited);
   return 0;
 }

@@ -23,12 +23,17 @@ typedef struct ListNode {
 } ListNode;
 
 
-int *createArray (int x); 												/* Array-related Functions */
+int *createArray (int x);
 int **create2Darray (int r, int c);
-void scanArray (int k, int hg, int hf, int *people);
-void scan2Darray (int r, int c, int **small, int **large, int **medium);
 void free2Darray (int r, int c, int **arr);
+void markVisited (int **arr, coords c);
+int hasBeenVisited (int **arr, coords c);
+coords createCoords (int c, int r);
+List newEmptyList();
+List addItem(List li, State n);
+List insertInOrder(List li, State new);
+int calcDiagonal(coords new, coords goal);
+State createNewState (State old, coords new, coords goal);
+State dequeue (List *li);
 	
 #endif	/* DEFINITIONS_H */
-
-

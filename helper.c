@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 #include "knight.h"
 
 int *createArray (int x){
@@ -33,6 +34,24 @@ void free2Darray (int r, int c, int **arr){
 	return;
 }
 
+void markVisited (int **arr, coords c){
+	arr[c.y][c.x] = 1;
+} 
+
+int hasBeenVisited (int **arr, coords c){
+	if (arr[c.y][c.x]){
+		return 1;
+	}
+	return 0;
+}
+
+coords createCoords (int c, int r){
+	coords new;
+	new.x = c;
+	new.y = r;
+	return new;
+}
+
 List newEmptyList() {
 	return NULL;
 }
@@ -45,7 +64,7 @@ List addItem(List li, State n) {
 	return newList;
 }
 
-List insertInOrder(List li, State new) {
+List insertInOrder(List li, State new) { /* Heuristic 1: Inserting in order based on diagonal distance to goal */
 	if ( li==NULL || new.sum < li->item.sum ) {
 		return addItem(li,new);
 	} 
@@ -55,26 +74,22 @@ List insertInOrder(List li, State new) {
 	return li;
 }
 
+int calcDiagonal(coords new, coords goal){
+	return sqrt(((goal.x-new.x)^2)+((goal.y-new.y)^2));
+}
+
 State createNewState (State old, coords new, coords goal){
-	
-}
-
-void listEmptyError() {
-	printf("list empty\n");
-	abort();
-}
-
-List removeFirstNode(List li) {
-	List returnList;
-	if ( li == NULL ) {
-		listEmptyError();
-	}
-	returnList = li->next;
-	free(li);
-	return returnList;
+	State newState;
+	newState.currSt = new;
+	newState.length = old.length+1;
+	newState.diagonal = calcDiagonal(new, goal);
+	newState.sum = newState.length+newState.diagonal;
+	return newState;
 }
 
 State dequeue (List *li){
-	
+	State item = (*li)->item;
+	*li = (*li)->next;
+	return item;
 }
 

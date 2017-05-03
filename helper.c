@@ -53,3 +53,116 @@ State dequeue (List *li){
 	return item;
 }
 
+/*
+int checkIfNear(int Xcurrent, int Ycurrent, int Xgoal, int Ygoal){
+	// Returns amount of steps needed to get to the goal (within range 0-3) and -1 if the solution is not near
+	switch(Xcurrent-XGoal){
+		case 2 :
+		// the goal state is two columns to the left of Xcurrent
+			switch(Ycurrent-YGoal){
+				case -1 :
+				//the goal state is one row above Xcurrent
+					return 1;
+					break;
+				case 0 :
+				//the goal state is on the same row
+					return 2;
+					break;
+				case 1 :
+				//the goal state is one row below Xcurrent
+					return 1;
+					break;
+		}
+		case 1 :
+		// the goal state is one column to the left of Xcurrent
+			switch(Ycurrent-YGoal){
+				case -2 :
+				//the goal state is two rows above Xcurrent
+					return 1;
+					break;
+				case -1 :
+				//the goal state is one row above Xcurrent
+					return 2;
+					break;
+				case 0 :
+				//the goal state is on the same row
+					return 3;
+					break;
+				case 1 :
+				//the goal state is one row below Xcurrent
+					return 2;
+					break;
+				case 2 :
+				//the goal state is two rows below Xcurrent
+					return 1;
+					break;
+		}
+		case 0 :
+		// the goal state is in the same column as Xcurrent
+			switch(Ycurrent-YGoal){
+				case -2 :
+				//the goal state is two rows above Xcurrent
+					return 2;
+					break;
+				case -1 :
+				//the goal state is one row above Xcurrent
+					return 3;
+					break;
+				case 0 :
+				//the goal state is on the same row
+					return 0;
+					break;
+				case 1 :
+				//the goal state is one row below Xcurrent
+					return 3;
+					break;
+				case 2 :
+				//the goal state is two rows below Xcurrent
+					return 2;
+					break;
+		}
+		case -1 :
+		// the goal state is one column to the right of Xcurrent
+				switch(Ycurrent-YGoal){
+				case -2 :
+				//the goal state is two rows above Xcurrent
+					return 1;
+					break;
+				case -1 :
+				//the goal state is one row above Xcurrent
+					return 2;
+					break;
+				case 0 :
+				//the goal state is on the same row
+					return 3;
+					break;
+				case 1 :
+				//the goal state is one row below Xcurrent
+					return 2;
+					break;
+				case 2 :
+				//the goal state is two rows below Xcurrent
+					return 1;
+					break;
+		}
+		case -2 :
+		// the goal state is two columns to the right of Xcurrent
+			switch(Ycurrent-YGoal){
+				case -1 :
+				//the goal state is one row above Xcurrent
+					return 1;
+					break;
+				case 0 :
+				//the goal state is on the same row
+					return 2;
+					break;
+				case 1 :
+				//the goal state is one row below Xcurrent
+					return 1;
+					break;
+		}
+	}
+	return -1; 
+}
+*/
+

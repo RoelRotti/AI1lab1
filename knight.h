@@ -3,6 +3,8 @@
 #ifndef KNIGHT_H
 #define	KNIGHT_H
 
+HELLOHELLO
+
 typedef struct coordinates {
 	int x;
 	int y;

@@ -35,5 +35,6 @@ List insertInOrder(List li, State new);
 int calcDiagonal(coords new, coords goal);
 State createNewState (State old, coords new, coords goal);
 State dequeue (List *li);
-	
+int checkIfNear(int Xcurrent, int Ycurrent, int Xgoal, int Ygoal);
+
 #endif	/* DEFINITIONS_H */

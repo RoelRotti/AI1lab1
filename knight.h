@@ -32,9 +32,12 @@ coords createCoords (int c, int r);
 List newEmptyList();
 List addItem(List li, State n);
 List insertInOrder(List li, State new);
-int calcDiagonal(coords new, coords goal);
+int mazeCount (int n, int m, int **arr);
+//int calcDiagonal(coords new, coords goal);
+int manhattanDistance (coords new, coords goal);
 State createNewState (State old, coords new, coords goal);
-State dequeue (List *li);
+State dequeue (List li);
+List removeFirstItem (List li);
 int checkIfNear(int Xcurrent, int Ycurrent, int Xgoal, int Ygoal);
 
 #endif	/* DEFINITIONS_H */

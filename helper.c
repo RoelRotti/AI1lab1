@@ -74,24 +74,56 @@ List insertInOrder(List li, State new) { /* Heuristic 1: Inserting in order base
 	return li;
 }
 
-int calcDiagonal(coords new, coords goal){
-	return sqrt(pow(abs(goal.x-new.x),abs(goal.x-new.x))+pow(abs(goal.y-new.y),abs(goal.y-new.y))); 
+int manhattanDistance (coords new, coords goal){
+	return abs(goal.x-new.x)+abs(goal.y-new.y);
+}
+
+/*int calcDiagonal(coords new, coords goal){
+	int x = abs(goal.x-new.x);
+	int y = abs(goal.y-new.y);
+	x = pow(x, 2);
+	y = pow(y, 2);
+	int output = x+y;
+	output = sqrt(output);
+	return output;*/
+	//return sqrt(pow(abs(goal.x-new.x),2)+pow(abs(goal.y-new.y),2)); 
+	
+	
 	/* sqare root of [(absolute value of distance x)^(absolute value of distance x) + (absolute value of distance y)^(absolute value of distance y)] */
+//}
+
+int mazeCount (int n, int m, int **arr){
+	int i, ii, counter = 0;
+	for (i=0; i<n; i++){
+		for (ii=0; ii<m; ii++){
+			if (arr[i][ii] != 0){
+				counter++;
+			}
+		}
+	}
+	return counter;
 }
 
 State createNewState (State old, coords new, coords goal){
 	State newState;
 	newState.currSt = new;
 	newState.length = old.length+1;
-	newState.diagonal = calcDiagonal(new, goal);
+	//newState.diagonal = calcDiagonal(new, goal);
+	newState.diagonal = manhattanDistance(new, goal);
+	
 	newState.sum = newState.length+newState.diagonal;
 	return newState;
 }
 
-State dequeue (List *li){
-	State item = (*li)->item;
-	*li = (*li)->next;
+State dequeue (List li){
+	State item = (li)->item;
 	return item;
+}
+
+List removeFirstItem (List li){
+	List new = li->next;
+	free(li);
+	return new;
 }
 
 int checkIfNear(int Xcurrent, int Ycurrent, int XGoal, int YGoal){

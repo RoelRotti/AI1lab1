@@ -61,6 +61,7 @@ int knightIDS(int row, int column, int rowGoal, int columnGoal) {
 int aStarAlgo (int row, int column, int rowGoal, int columnGoal){
 	int x, act;
 	int **arr = create2Darray(500,500);
+	printf("Unequal 0 in maze: %d\n", mazeCount(500, 500, arr));
 	coords newCoords = createCoords (column, row);
 	coords goal = createCoords(columnGoal, rowGoal);
 	State current, new;
@@ -68,12 +69,16 @@ int aStarAlgo (int row, int column, int rowGoal, int columnGoal){
 	current = createNewState(current, newCoords, goal);
 	x = checkIfNear(column, row, columnGoal, rowGoal);
 	if (x > (-1)){
+		statesVisited++;
 		return x;
 	}
 	List li = newEmptyList();
 	li = insertInOrder(li, current);
 	while (li != NULL){
-		current = dequeue(&li);
+		statesVisited++;
+		current = dequeue(li);
+		li = removeFirstItem(li);
+		printf("x: %d y: %d\n", current.currSt.x, current.currSt.y);
 		markVisited(arr, current.currSt);
 		for (act=0; act < 8; act++) {
 			int r = row + actions[act][0];
@@ -88,10 +93,15 @@ int aStarAlgo (int row, int column, int rowGoal, int columnGoal){
 					  return new.length+x; 
 				  }
 				  li = insertInOrder(li, new);
+				} else {
+					printf("Valid locations not inserted: x: %d y: %d\n", c, r);
 				}
+			} else {
+				printf("Denied: x: %d y: %d\n", new.currSt.x, new.currSt.y);
 			}	
 		}
 	}
+	printf("Error\n");
 	free2Darray(500,500, arr);
 	return 0;
 		
@@ -114,8 +124,10 @@ int main(int argc, char *argv[]) {
 		printf("#visited states: %lu\n", statesVisited);
 	} else if (alg == 2){
 		printf("Length shortest path: %d\n", aStarAlgo(x0,y0, x1,y1));
+		printf("#visited states: %lu\n", statesVisited);
 	} else {
 		printf("Length shortest path: %d\n", aStarAlgo(x0,y0, x1,y1));
+		printf("#visited states: %lu\n", statesVisited);
 	}
 	return 0;
 }

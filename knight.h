@@ -23,11 +23,6 @@ typedef struct ListNode {
 } ListNode;
 
 
-int *createArray (int x);
-int **create2Darray (int r, int c);
-void free2Darray (int r, int c, int **arr);
-void markVisited (int **arr, coords c);
-int hasBeenVisited (int **arr, coords c);
 coords createCoords (int c, int r);
 List newEmptyList();
 List addItem(List li, State n);
@@ -37,6 +32,7 @@ int calcDiagonal(coords new, coords goal);
 int manhattanDistance (coords new, coords goal);
 State createNewState (State old, coords new, coords goal, int heur);
 State dequeue (List li);
+void freeList(List li);
 List removeFirstItem (List li);
 int checkIfNear(int Xcurrent, int Ycurrent, int Xgoal, int Ygoal);
 

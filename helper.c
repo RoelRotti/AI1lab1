@@ -6,45 +6,6 @@
 #include <math.h>
 #include "knight.h"
 
-int *createArray (int x){
-	int *arr = NULL;
-	arr = calloc (x, sizeof (int *));
-	if (arr == NULL){
-		printf("Error malloc\n");
-		exit(EXIT_FAILURE);
-	}
-	return arr;
-}
-
-int **create2Darray (int r, int c){
-	int i;
-	int **arr = malloc (r*sizeof (int *)); 
-	for (i = 0; i < r; i++){
-		arr[i] = createArray (c);
-	}
-	return arr;
-}
-
-void free2Darray (int r, int c, int **arr){
-	int i;
-	for (i = 0; i < r; i++){
-		free (arr[i]);
-	}
-	free(arr);
-	return;
-}
-
-void markVisited (int **arr, coords c){
-	arr[c.y][c.x] = 1;
-} 
-
-int hasBeenVisited (int **arr, coords c){
-	if (arr[c.y][c.x]){
-		return 1;
-	}
-	return 0;
-}
-
 coords createCoords (int c, int r){
 	coords new;
 	new.x = c;
@@ -117,6 +78,16 @@ List removeFirstItem (List li){
 	List new = li->next;
 	free(li);
 	return new;
+}
+
+void freeList(List li) {
+	List li1;
+	while ( li != NULL ) {
+		li1 = li->next;
+		free(li);
+		li = li1;
+	}
+	return;
 }
 
 int checkIfNear(int Xcurrent, int Ycurrent, int XGoal, int YGoal){

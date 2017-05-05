@@ -74,6 +74,7 @@ int aStarAlgo (int row, int column, int rowGoal, int columnGoal, int heur){
 	li = insertInOrder(li, current);
 	while (li != NULL){
 		if (shortest != -1 && li->item.length > shortest){
+			freeList(li);
 			return shortest;
 		}
 		statesVisited++;
@@ -84,19 +85,19 @@ int aStarAlgo (int row, int column, int rowGoal, int columnGoal, int heur){
 			int c = current.currSt.x + actions[act][1]; 
 			if (isValidLocation(r, c)) {
 				newCoords = createCoords (c, r);
-				 new = createNewState(current, newCoords, goal, heur); 
-				 x = checkIfNear(c, r, columnGoal, rowGoal); /* we found the solution within a range of x moves */
-				 if (x > (-1)){
+				new = createNewState(current, newCoords, goal, heur); 
+				x = checkIfNear(c, r, columnGoal, rowGoal); 
+				if (x > (-1)){ /* we found the solution within a range of x moves */
 					if (shortest == -1 || new.length+x < shortest){
 						shortest = new.length+x; 
 					}
-				  }
-				  li = insertInOrder(li, new);
+				}
+				li = insertInOrder(li, new);	
 			}	
 		}
 	}
 	printf("Error\n");
-//	free2Darray(500,500, arr);
+	freeList(li);
 	return 0;
 		
 }

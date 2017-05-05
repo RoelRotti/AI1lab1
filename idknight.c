@@ -91,8 +91,9 @@ int aStarAlgo (int row, int column, int rowGoal, int columnGoal, int heur){
 					if (shortest == -1 || new.length+x < shortest){
 						shortest = new.length+x; 
 					}
+				} else {
+					li = insertInOrder(li, new);	
 				}
-				li = insertInOrder(li, new);	
 			}	
 		}
 	}

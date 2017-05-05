@@ -64,7 +64,7 @@ List addItem(List li, State n) {
 	return newList;
 }
 
-List insertInOrder(List li, State new) { /* Heuristic 1: Inserting in order based on diagonal distance to goal */
+List insertInOrder(List li, State new) { 
 	if ( li==NULL || new.sum < li->item.sum ) {
 		return addItem(li,new);
 	} 

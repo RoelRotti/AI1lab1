@@ -59,8 +59,7 @@ int knightIDS(int row, int column, int rowGoal, int columnGoal) {
 
 
 int aStarAlgo (int row, int column, int rowGoal, int columnGoal, int heur){
-	int x, act;
-//	int **arr = create2Darray(500,500);
+	int x, act, shortest = -1;
 	coords newCoords = createCoords (column, row);
 	coords goal = createCoords(columnGoal, rowGoal);
 	State current, new;
@@ -74,27 +73,25 @@ int aStarAlgo (int row, int column, int rowGoal, int columnGoal, int heur){
 	List li = newEmptyList();
 	li = insertInOrder(li, current);
 	while (li != NULL){
+		if (shortest != -1 && li->item.length > shortest){
+			return shortest;
+		}
 		statesVisited++;
 		current = dequeue(li);
 		li = removeFirstItem(li);
-	//	printf("x: %d y: %d\n", current.currSt.x, current.currSt.y);
-	//	markVisited(arr, current.currSt);
 		for (act=0; act < 8; act++) {
 			int r = current.currSt.y + actions[act][0];
 			int c = current.currSt.x + actions[act][1]; 
 			if (isValidLocation(r, c)) {
 				newCoords = createCoords (c, r);
-		//		if (!hasBeenVisited(arr, newCoords)){
-				  new = createNewState(current, newCoords, goal, heur); 
-				  x = checkIfNear(c, r, columnGoal, rowGoal); /* we found the solution within a range of x moves */
-				  if (x > (-1)){
-				//	  free2Darray(500,500, arr);
-					  return new.length+x; 
+				 new = createNewState(current, newCoords, goal, heur); 
+				 x = checkIfNear(c, r, columnGoal, rowGoal); /* we found the solution within a range of x moves */
+				 if (x > (-1)){
+					if (shortest == -1 || new.length+x < shortest){
+						shortest = new.length+x; 
+					}
 				  }
 				  li = insertInOrder(li, new);
-		//		} else {
-		//			printf("Valid locations not inserted: x: %d y: %d\n", c, r);
-		//		}
 			}	
 		}
 	}

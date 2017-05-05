@@ -58,15 +58,14 @@ int knightIDS(int row, int column, int rowGoal, int columnGoal) {
 
 
 
-int aStarAlgo (int row, int column, int rowGoal, int columnGoal){
+int aStarAlgo (int row, int column, int rowGoal, int columnGoal, int heur){
 	int x, act;
-	int **arr = create2Darray(500,500);
-	printf("Unequal 0 in maze: %d\n", mazeCount(500, 500, arr));
+//	int **arr = create2Darray(500,500);
 	coords newCoords = createCoords (column, row);
 	coords goal = createCoords(columnGoal, rowGoal);
 	State current, new;
 	current.length = -1;
-	current = createNewState(current, newCoords, goal);
+	current = createNewState(current, newCoords, goal, heur);
 	x = checkIfNear(column, row, columnGoal, rowGoal);
 	if (x > (-1)){
 		statesVisited++;
@@ -78,31 +77,29 @@ int aStarAlgo (int row, int column, int rowGoal, int columnGoal){
 		statesVisited++;
 		current = dequeue(li);
 		li = removeFirstItem(li);
-		printf("x: %d y: %d\n", current.currSt.x, current.currSt.y);
-		markVisited(arr, current.currSt);
+	//	printf("x: %d y: %d\n", current.currSt.x, current.currSt.y);
+	//	markVisited(arr, current.currSt);
 		for (act=0; act < 8; act++) {
-			int r = row + actions[act][0];
-			int c = column + actions[act][1]; 
+			int r = current.currSt.y + actions[act][0];
+			int c = current.currSt.x + actions[act][1]; 
 			if (isValidLocation(r, c)) {
 				newCoords = createCoords (c, r);
-				if (!hasBeenVisited(arr, newCoords)){
-				  new = createNewState(current, newCoords, goal); 
+		//		if (!hasBeenVisited(arr, newCoords)){
+				  new = createNewState(current, newCoords, goal, heur); 
 				  x = checkIfNear(c, r, columnGoal, rowGoal); /* we found the solution within a range of x moves */
 				  if (x > (-1)){
-					  free2Darray(500,500, arr);
+				//	  free2Darray(500,500, arr);
 					  return new.length+x; 
 				  }
 				  li = insertInOrder(li, new);
-				} else {
-					printf("Valid locations not inserted: x: %d y: %d\n", c, r);
-				}
-			} else {
-				printf("Denied: x: %d y: %d\n", new.currSt.x, new.currSt.y);
+		//		} else {
+		//			printf("Valid locations not inserted: x: %d y: %d\n", c, r);
+		//		}
 			}	
 		}
 	}
 	printf("Error\n");
-	free2Darray(500,500, arr);
+//	free2Darray(500,500, arr);
 	return 0;
 		
 }
@@ -117,16 +114,20 @@ int main(int argc, char *argv[]) {
 		printf("Goal location (x,y)  = "); fflush(stdout);
 		scanf("%d %d", &x1, &y1);
 	} while (!isValidLocation(x1,y1));
-	printf("Which algorithm? Choose: '1': A* (Heuristic 1); '2': A* (Heuristic 2); '3': AknightIDS: \n");
-	scanf("%d", &alg);
+	
+	do {
+		printf("'1': A* (Diagonal Heuristic); '2': A* (Manhattan Heuristic); '3': AknightIDS: \n");
+		scanf("%d", &alg);
+	} while (alg != 1 && alg != 2 && alg != 3);
+	
 	if (alg == 3){
 		printf("Length shortest path: %d\n", knightIDS(x0,y0, x1,y1)); 
 		printf("#visited states: %lu\n", statesVisited);
 	} else if (alg == 2){
-		printf("Length shortest path: %d\n", aStarAlgo(x0,y0, x1,y1));
+		printf("Length shortest path: %d\n", aStarAlgo(x0,y0, x1,y1, alg));
 		printf("#visited states: %lu\n", statesVisited);
-	} else {
-		printf("Length shortest path: %d\n", aStarAlgo(x0,y0, x1,y1));
+	} else if (alg == 1){
+		printf("Length shortest path: %d\n", aStarAlgo(x0,y0, x1,y1, alg));
 		printf("#visited states: %lu\n", statesVisited);
 	}
 	return 0;

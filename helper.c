@@ -78,19 +78,10 @@ int manhattanDistance (coords new, coords goal){
 	return abs(goal.x-new.x)+abs(goal.y-new.y);
 }
 
-/*int calcDiagonal(coords new, coords goal){
-	int x = abs(goal.x-new.x);
-	int y = abs(goal.y-new.y);
-	x = pow(x, 2);
-	y = pow(y, 2);
-	int output = x+y;
-	output = sqrt(output);
-	return output;*/
-	//return sqrt(pow(abs(goal.x-new.x),2)+pow(abs(goal.y-new.y),2)); 
-	
-	
+int calcDiagonal(coords new, coords goal){
+	return sqrt(pow(abs(goal.x-new.x),2)+pow(abs(goal.y-new.y),2)); 
 	/* sqare root of [(absolute value of distance x)^(absolute value of distance x) + (absolute value of distance y)^(absolute value of distance y)] */
-//}
+}
 
 int mazeCount (int n, int m, int **arr){
 	int i, ii, counter = 0;
@@ -104,13 +95,15 @@ int mazeCount (int n, int m, int **arr){
 	return counter;
 }
 
-State createNewState (State old, coords new, coords goal){
+State createNewState (State old, coords new, coords goal, int heur){
 	State newState;
 	newState.currSt = new;
 	newState.length = old.length+1;
-	//newState.diagonal = calcDiagonal(new, goal);
-	newState.diagonal = manhattanDistance(new, goal);
-	
+	if (heur == 1){
+		newState.diagonal = calcDiagonal(new, goal);
+	} else if (heur == 2){
+		newState.diagonal = manhattanDistance(new, goal);
+	}
 	newState.sum = newState.length+newState.diagonal;
 	return newState;
 }
